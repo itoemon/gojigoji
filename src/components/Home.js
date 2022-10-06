@@ -1,5 +1,5 @@
 import React, { useEffect, useState, createRef } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useSearchParams, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import css from "../index.module.scss";
 import styled from "styled-components";
@@ -8,7 +8,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 
 
 const Home = () => {
-  const params = useParams();  
+  const search = useLocation().search;
+  const query2 = new URLSearchParams(search);
   return (
   <div>
     <a href="https://lin.ee/1Xj2SQF">
@@ -20,7 +21,8 @@ const Home = () => {
     </a>
     {/* <div class="line-it-button" data-lang="ja" data-type="friend" data-env="REAL" data-count="true" data-home="true" data-lineId="@443jtuss" style="display: none;"></div>
       <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script> */}
-    <div>{params}</div>
+    <div>{query2.get('code')}</div>
+    <div>{query2.get('state')}</div>
   </div>
   );
 };
