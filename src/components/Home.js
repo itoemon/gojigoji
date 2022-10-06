@@ -4,6 +4,7 @@ import classNames from "classnames";
 import css from "../index.module.scss";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
+import "whatwg-fetch";
 // import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
 
 
