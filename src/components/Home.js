@@ -26,8 +26,7 @@ const Home = () => {
     },
     body: new URLSearchParams({
         'grant_type': 'authorization_code',
-        // 'code': `${query2.get('code')}`,
-        'code': "y1clcuS2oj1KzQlWxuKh",
+        'code': `${query2.get('code')}`,
         'redirect_uri' : `${encodeURI("https://gojigoji.web.app")}`,
         'client_id': '1657533055',
         'client_secret': 'a05e08108d51be250977f137a61ef88d'
