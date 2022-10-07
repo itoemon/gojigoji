@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 // import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
-
+import { counterState } from "../atoms";
 
 const Home = () => {
   const search = useLocation().search;
@@ -27,7 +27,7 @@ const Home = () => {
     body: new URLSearchParams({
         'grant_type': 'authorization_code',
         'code': `${query2.get('code')}`,
-        'redirect_uri' : `${encodeURI("https://gojigoji.web.app")}`,
+        'redirect_uri' : `${encodeURI("https://gojigoji.web.app/callback")}`,
         'client_id': '1657533055',
         'client_secret': 'a05e08108d51be250977f137a61ef88d'
     })
@@ -70,22 +70,40 @@ const Home = () => {
     getToken();
   }, []);
 
+  const [ count , setCount ]= useRecoilState(counterState)
+  const countUp = () => {
+    setCount((current) => {
+      const future = JSON.parse(JSON.stringify(current));
+      future["count"] = current["count"] + 1;
+      return future;
+    });
+  };
+  const countDown = () => {
+    setCount((current) => {
+      const future = JSON.parse(JSON.stringify(current));
+      future["count"] = current["count"] - 1;
+      return future;
+    });
+  };
+
   return (
   <div>
     <a href="https://lin.ee/1Xj2SQF">
       <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="36" border="0"/>
     </a>
-    <a href="https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657533055&redirect_uri=https://gojigoji.web.app&state=1234asdg&bot_prompt=aggressive&scope=profile%20openid%20email&"
+    <a href="https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657533055&redirect_uri=https://gojigoji.web.app/callback&state=1234asdg&bot_prompt=aggressive&scope=profile%20openid%20email&"
       alt="">
         ログイン
     </a>
     {/* <div class="line-it-button" data-lang="ja" data-type="friend" data-env="REAL" data-count="true" data-home="true" data-lineId="@443jtuss" style="display: none;"></div>
       <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script> */}
-    <div>{query2.get('code')}</div>
-    <div>{query2.get('state')}</div>
     <div>{user[0].name}</div>
     <img src={user[0].picture} alt=''/>
     <div>{}</div>
+    <div>カウンター</div>
+      <div onClick={countUp}>+</div>
+      <div onClick={countDown}>-</div>
+      <div>{count.count}</div>
   </div>
   );
 };
