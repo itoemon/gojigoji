@@ -11,7 +11,11 @@ import { useRecoilState, useRecoilValue } from "recoil";
 const Home = () => {
   const search = useLocation().search;
   const query2 = new URLSearchParams(search);
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState([{
+    name: '',
+    picture: '',
+    // : '',
+  }]);
 
   // // POST送信
   const url = 'https://api.line.me/oauth2/v2.1/token'
