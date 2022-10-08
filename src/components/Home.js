@@ -12,10 +12,12 @@ const Home = () => {
   const search = useLocation().search;
   const query2 = new URLSearchParams(search);
   const [user, setUser] = useState([{
-    name: '',
+    name: 'ゲストユーザー',
     picture: '',
     // : '',
   }]);
+  const [logedIn, setLogedIn] = useState(false);
+  const [openPanel, setOpenPanel] = useState(false);
 
   // // POST送信
   const url = 'https://api.line.me/oauth2/v2.1/token'
@@ -48,11 +50,6 @@ const Home = () => {
 
   const url2 = "https://api.line.me/oauth2/v2.1/verify"
   const validateToken =async(idToken)=>{
-    setCount((current) => {
-      const future = JSON.parse(JSON.stringify(current));
-      future["count"] = Number(query2.get('state'));
-      return future;
-    });
     await fetch(url2, {
       method: 'POST',
       body: new URLSearchParams({
@@ -75,40 +72,39 @@ const Home = () => {
     getToken();
   }, []);
 
-  const [ count , setCount ]= useRecoilState(counterState)
-  const countUp = () => {
-    setCount((current) => {
-      const future = JSON.parse(JSON.stringify(current));
-      future["count"] = current["count"] + 1;
-      return future;
-    });
-  };
-  const countDown = () => {
-    setCount((current) => {
-      const future = JSON.parse(JSON.stringify(current));
-      future["count"] = current["count"] - 1;
-      return future;
-    });
-  };
-
   return (
   <div>
-    <a href="https://lin.ee/1Xj2SQF">
-      <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="36" border="0"/>
-    </a>
-    <a href={`https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657533055&redirect_uri=https://gojigoji.web.app&state=${count.count}&bot_prompt=aggressive&scope=profile%20openid%20email&`}
-      alt="">
-        ログイン
-    </a>
-    {/* <div class="line-it-button" data-lang="ja" data-type="friend" data-env="REAL" data-count="true" data-home="true" data-lineId="@443jtuss" style="display: none;"></div>
-      <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script> */}
-    <div>{user[0].name}</div>
-    <img src={user[0].picture} alt=''/>
-    <div>{}</div>
-    <div>カウンター</div>
-      <div onClick={countUp}>+</div>
-      <div onClick={countDown}>-</div>
-      <div>{count.count}</div>
+    <div className={classNames(css.body)}>
+      <div >
+        <img 
+        className={classNames(css.login_icon)} 
+        src={user[0].picture} alt=''
+        onClick={() => {setOpenPanel(true)}}
+        />
+      </div>
+      <div className={classNames(openPanel? css.login_panel: css.display_none)}>
+        <div 
+        className={classNames(css.close_button)}
+        onClick={()=>{setOpenPanel(false)}}>×</div>
+        <img className={classNames(css.icon)} src={user[0].picture} alt=''/>
+        <div className={classNames(css.name)}> {user[0].name} </div>
+        <a className={classNames(css.button)} alt=""
+          href={`https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657533055&redirect_uri=https://gojigoji.web.app&state=1234abcd&bot_prompt=aggressive&scope=profile%20openid%20email&`}
+          >
+          <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="LINEでログイン" height="36" border="0"/>
+        </a>
+      </div>
+      <div className={classNames(css.official_line)}>
+        <a href="https://lin.ee/1Xj2SQF">
+          <img className={classNames(css.button)} src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="36" border="0"/>
+        </a>
+      </div>
+    </div>
+
+    <div className={classNames(css.footer)}>
+
+    </div>
+
   </div>
   );
 };

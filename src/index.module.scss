@@ -1,3 +1,73 @@
 .display_none{
   display: none;
 }
+
+.body{
+  height: 90vh;
+  background-color: bisque;
+  position: relative;
+  .login_icon{
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: gray;
+  }
+  .login_panel{
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    height: 240px;
+    width: 240px;
+    background-color: azure;
+    border: solid 2px gray;
+    border-radius: 4px;
+    z-index: 3;
+    .close_button{
+      margin-left: 190px;
+      margin-top: 10px;
+      width: 40px;
+      height: 40px;
+      border: solid 1px gray;
+      border-radius: 50%;
+      line-height: 55%;
+      font-size: 50px;
+      text-align: center;
+    }
+    .icon{
+      margin: 0px 75px 0px 75px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background-color: gray;
+    }
+    .name{
+      width: 240px;
+      text-align: center;
+    }
+    .button{
+      margin: 10px 60px;
+    }
+  }
+  .official_line{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 240px;
+    height: 240px;
+    background-color:  azure;
+    border: solid 2px gray;
+    border-radius: 4px;
+    z-index: 2;
+    .button{
+      margin: 180px 60px 0px 60px;
+    }
+  }
+}
+.footer{
+  height: 20vh;
+  background-color: black;
+  color: azure;
+}
