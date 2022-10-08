@@ -13,7 +13,7 @@ const Home = () => {
   const query2 = new URLSearchParams(search);
   const [user, setUser] = useState([{
     name: 'ゲストユーザー',
-    picture: '',
+    picture: `${process.env.PUBLIC_URL}/img/made_in.jpg`,
     // : '',
   }]);
   const [logedIn, setLogedIn] = useState(false);
@@ -72,9 +72,18 @@ const Home = () => {
     getToken();
   }, []);
 
+  useEffect(() => {
+    if(user[0].name !== 'ゲストユーザー')
+    setLogedIn(true)
+  }, [user[0].name]);
+
   return (
   <div>
     <div className={classNames(css.body)}>
+      <img className={classNames(css.title)} src={`${process.env.PUBLIC_URL}/img/title.png`} alt=''/>
+      <div className={classNames(css.sentence_con)}>
+        <img className={classNames(css.sentence)} src={`${process.env.PUBLIC_URL}/img/sentence.png`} alt=''/>
+      </div>
       <div >
         <img 
         className={classNames(css.login_icon)} 
@@ -88,23 +97,36 @@ const Home = () => {
         onClick={()=>{setOpenPanel(false)}}>×</div>
         <img className={classNames(css.icon)} src={user[0].picture} alt=''/>
         <div className={classNames(css.name)}> {user[0].name} </div>
-        <a className={classNames(css.button)} alt=""
+        <a className={classNames(logedIn? css.display_none: css.button)} alt=""
           href={`https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657533055&redirect_uri=https://gojigoji.web.app&state=1234abcd&bot_prompt=aggressive&scope=profile%20openid%20email&`}
           >
-          <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="LINEでログイン" height="36" border="0"/>
+          <img src={`${process.env.PUBLIC_URL}/img/btn_login_base.png`} alt="LINEでログイン" height="36" border="0"/>
         </a>
+        <div className={classNames(logedIn? css.button_logout: css.display_none)}
+          onClick={()=>{window.location.reload()}}>Log out</div>
       </div>
-      <div className={classNames(css.official_line)}>
-        <a href="https://lin.ee/1Xj2SQF">
-          <img className={classNames(css.button)} src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="36" border="0"/>
-        </a>
+      <div className={classNames(css.flex)}>
+        <div className={classNames(css.stamp_shop)}>
+          <img className={classNames(css.img1)} src={`${process.env.PUBLIC_URL}/img/stamp_shop.png`} alt=''/>
+          <a className={classNames(css.button)} href="https://store.line.me/stickershop/product/4220344/ja?utm_source=gnsh_stickerDetail">
+            スタンプショップへいく
+          </a>
+          <img className={classNames(css.img2)} src={`${process.env.PUBLIC_URL}/img/normal_right.png`} alt=''/>
+        </div>
+        <div className={classNames(css.official_line)}>
+          <img className={classNames(css.img1)} src={`${process.env.PUBLIC_URL}/img/official_line.png`} alt=''/>
+          <a href="https://lin.ee/1Xj2SQF">
+            <img className={classNames(css.button)} src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="36" border="0"/>
+          </a>
+          <img className={classNames(css.img2)} src={`${process.env.PUBLIC_URL}/img/normal_right.png`} alt=''/>
+        </div>
       </div>
     </div>
 
     <div className={classNames(css.footer)}>
-
+      <div className={classNames(css.link)}>公式twitter : <a className={classNames(css.link)} href="https://twitter.com/gojix2_official?s=21&t=hGKEcj6AOIz1qX66mmST_g">https://twitter.com/gojix2_official?s=21&t=hGKEcj6AOIz1qX66mmST_g</a></div>
+      <div className={classNames(css.link)}>公式instagram : <a className={classNames(css.link)} href="https://instagram.com/gojigoj_kun?igshid=YmMyMTA2M2Y=">https://instagram.com/gojigoj_kun?igshid=YmMyMTA2M2Y=</a></div>
     </div>
-
   </div>
   );
 };
